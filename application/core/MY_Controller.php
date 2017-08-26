@@ -20,6 +20,11 @@ class Admin_Controller extends CI_Controller{
         
         $this->load->switch_themes_off();
         
+        if( !$this->session->userdata('admin') ){
+            
+        	redirect('admin/privilege/login');
+        }
+        
     }
 	
 }
