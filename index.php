@@ -190,6 +190,12 @@ if (defined('ENVIRONMENT'))
 
 		define('APPPATH', BASEPATH.$application_folder.'/');
 	}
+    
+    // echo APPPATH;
+    // echo "<br>";
+    // echo BASEPATH;
+    // die;
+    
 
 /*
  * --------------------------------------------------------------------
