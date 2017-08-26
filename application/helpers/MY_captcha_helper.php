@@ -39,9 +39,9 @@
  */
 if ( ! function_exists('create_captcha'))
 {
-	function create_captcha($data = '', $img_path = '', $img_url = '', $font_path = '')
+	function create_captcha($data = '',  $font_path = '')
 	{
-		$defaults = array('word' => '', 'img_path' => '', 'img_url' => '', 'img_width' => '150', 'img_height' => '30', 'font_path' => '', 'expiration' => 7200);
+		$defaults = array('word' => '', 'word_length' => 4,'img_width' => '150', 'img_height' => '30', 'font_path' => '', 'expiration' => 7200);
         
         
         
@@ -59,7 +59,7 @@ if ( ! function_exists('create_captcha'))
 				$$key = ( ! isset($data[$key])) ? $val : $data[$key];
 			}
 		}
-
+/*
 		if ($img_path == '' OR $img_url == '')
 		{
 			return FALSE;
@@ -103,17 +103,17 @@ if ( ! function_exists('create_captcha'))
 		}
 
 		@closedir($current_dir);
-
+*/
 		// -----------------------------------
 		// Do we have a "word" yet?
 		// -----------------------------------
-
+ 
 	   if ($word == '')
 	   {
 			$pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 			$str = '';
-			for ($i = 0; $i < 8; $i++)
+			for ($i = 0; $i < $word_length; $i++)
 			{
 				$str .= substr($pool, mt_rand(0, strlen($pool) -1), 1);
 			}
@@ -230,15 +230,22 @@ if ( ! function_exists('create_captcha'))
 		//  Generate the image
 		// -----------------------------------
 
-		$img_name = $now.'.jpg';
+		// $img_name = $now.'.jpg';
 
-		ImageJPEG($im, $img_path.$img_name);
+		// ImageJPEG($im, $img_path.$img_name);
 
-		$img = "<img src=\"$img_url$img_name\" width=\"$img_width\" height=\"$img_height\" style=\"border:0;\" alt=\" \" />";
+		// $img = "<img src=\"$img_url$img_name\" width=\"$img_width\" height=\"$img_height\" style=\"border:0;\" alt=\" \" />";
 
+        // 直接输出
+        header("Content-Type:image/jpeg");
+        
+        ImageJPEG($im);
+        
 		ImageDestroy($im);
+        
+        return $word;
 
-		return array('word' => $word, 'time' => $now, 'image' => $img);
+		// return array('word' => $word, 'time' => $now, 'image' => $img);
 	}
 }
 
