@@ -6,6 +6,7 @@ class Privilege extends CI_Controller {
     public function __construct(){
     	
         parent::__construct();
+        $this->load->model('admin_model');
         $this->load->helper('captcha');
         $this->load->library('form_validation');
         
@@ -13,18 +14,6 @@ class Privilege extends CI_Controller {
     
     
     public function login(){
-        
-        // $vals = array(
-            // 'word' => rand(1000,9999),
-            // 'img_path' => './data/captcha/',
-            // 'img_url' => base_url() . 'data/captcha/'
-        // );
-        
-        
-        // $data = create_captcha($vals);
-    	
-        // var_dump($data);
-        
         
         $this->load->view('login.html');
     }
@@ -35,7 +24,6 @@ class Privilege extends CI_Controller {
         $vals = array(
             'word_length' => 6,
         );
-        
     	$code = create_captcha($vals);
         
         $this->session->set_userdata('code', $code);
@@ -48,8 +36,6 @@ class Privilege extends CI_Controller {
         //设置验证规则
         $this->form_validation->set_rules('username', '用户名', 'required');
         $this->form_validation->set_rules('password', '密码', 'required');
-        
-        
     	
         //获取表单数据
         $captcha = strtolower($this->input->post('captcha'));
@@ -60,8 +46,6 @@ class Privilege extends CI_Controller {
         if( $captcha === $code ){
             
             //验证码正确，验证用户名和密码
-            
-            
             if( $this->form_validation->run() == false ){
             	
                 $data['message'] = validation_errors();
@@ -73,6 +57,30 @@ class Privilege extends CI_Controller {
                 $username = $this->input->post('username'); 
                 $password = $this->input->post('password');
                 
+                $m_pwd = $this->admin_model->find_pwd($username);
+                
+                if( $m_pwd == null ){
+                    
+                    $data['url'] = site_url('admin/privilege/login');
+                    $data['message'] = '用户名不存在，请重新填写';
+                    $data['wait'] = 3;
+                    $this->load->view('message.html', $data);
+                }else{
+                    
+                    if( $m_pwd['password'] == $password ){
+                        
+                        $this->session->set_userdata('admin', $username);                    
+                        redirect('admin/main/index');
+                    }else{
+                        
+                        $data['url'] = site_url('admin/privilege/login');
+                        $data['message'] = '用户名或密码错误，请重新填写';
+                        $data['wait'] = 3;
+                        $this->load->view('message.html', $data);
+                    }                   
+                }
+
+                /*
                 if( $username == 'admin' && $password == '123' ){
                     
                     $this->session->set_userdata('admin', $username);                    
@@ -85,6 +93,7 @@ class Privilege extends CI_Controller {
                     $data['wait'] = 3;
                     $this->load->view('message.html', $data);
                 }
+                */
             }
             
         }
@@ -95,10 +104,7 @@ class Privilege extends CI_Controller {
             $data['wait'] = 3;
             $this->load->view('message.html', $data);
         }
-        
-        
     }
-    
     
     //退出
     public function logout(){
@@ -107,8 +113,6 @@ class Privilege extends CI_Controller {
         $this->session->sess_destroy();
         redirect('admin/privilege/login');
     }
-    
-    
     
 }
 
