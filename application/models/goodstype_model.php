@@ -20,6 +20,12 @@ class Goodstype_model extends CI_Model{
     }
     
     //显示商品类型
+    public function show_goodstype(){
+    	$query = $this->db->get(self::TBL);
+        return $query->result_array();
+    }
+    
+    //分页显示商品类型
     public function list_goodstype($limit, $offset){
     	
         $query = $this->db->limit($limit, $offset)->get(self::TBL);
