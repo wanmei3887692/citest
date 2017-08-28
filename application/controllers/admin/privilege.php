@@ -80,20 +80,6 @@ class Privilege extends CI_Controller {
                     }                   
                 }
 
-                /*
-                if( $username == 'admin' && $password == '123' ){
-                    
-                    $this->session->set_userdata('admin', $username);                    
-                    redirect('admin/main/index');
-
-                }else{
-                    
-                    $data['url'] = site_url('admin/privilege/login');
-                    $data['message'] = '用户名或密码错误，请重新填写';
-                    $data['wait'] = 3;
-                    $this->load->view('message.html', $data);
-                }
-                */
             }
             
         }
