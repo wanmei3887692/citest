@@ -23,6 +23,15 @@ class attribute_model extends CI_Model {
         return $query->result_array();
     }
     
+    //获得指定的属性
+    public function get_attr($type_id){
+        
+        $condition['type_id'] = $type_id;
+        $query = $this->db->where($condition)->get(self::TBL);
+        return $query->result_array();
+    	
+    }
+    
     
 }
 
