@@ -107,6 +107,56 @@ class Category_model extends CI_Model {
     
     
     
+    //--------------------------------------------------------------
+    
+    //获得组合好的多维数组
+    public function front_cate(){
+        
+        $query = $this->db->get(self::TBL);
+        
+        $arr = $query->result_array();
+        
+    	return $this->make_cate($arr, $pid = 0);
+    }
+    
+    //根据PID获得子分类
+    public function children($arr, $pid =0){
+        
+        $child = array();
+        foreach($arr as $k => $v){
+            
+            if($v['parent_id'] == $pid){
+            	$child[] = $v;
+            }
+        }
+        return $child;
+    }
+    
+    public function make_cate($arr, $pid = 0){
+    	
+        $children = $this->children($arr, $pid);
+        
+        if(empty($children)){
+        	
+            return null;            
+        }
+        
+        foreach($children as $k => $v){
+            
+            $current_child = $this->make_cate($arr, $v['cat_id']);
+            if($current_child != null){
+            	//说明，该分类节点还有子分类节点，将子节点作为该节点的一个元素来保存
+                $children[$k]['child'] = $current_child;
+            }
+        }
+        
+        return $children;
+    }
+    
+    
+    
+    
+    
     
 }
 
