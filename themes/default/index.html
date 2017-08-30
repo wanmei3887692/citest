@@ -301,13 +301,16 @@
                     <div class="tuijian_content">
                         <div id="tuijian_content_1" class="tuijian_shangpin" style="display: block;">
                             <ul>
+                            <?php foreach($best_goods as $v):?>
                                 <li>
                                     <dl>
-                                        <dt><a href=""><img src="<?php echo base_url('themes/default') . '/images';?>/365_7d5e08127b8d6799209674ecffbfc624.jpg_small.jpg" /></a></dt>
-                                        <dd><a href="">11111111棉布艺双人沙发垫沙发巾飘窗垫素雅黄花</a></dd>
-                                        <dd> 商城价：<em>256.00</em>元</dd>
+                                        <dt><a href="<?php echo site_url('goods/index').'/'.$v['goods_id'];?>"><img src="<?php echo base_url('public/uploads') .'/'. $v['goods_thumb'];?>" /></a></dt>
+                                        <dd><a href="<?php echo site_url('goods/index').'/'.$v['goods_id'];?>"><?php echo $v['goods_name'];?></a></dd>
+                                        <dd> 商城价：<em><?php echo $v['shop_price'];?></em>元</dd>
                                     </dl>
                                 </li>
+                            <?php endforeach;?>
+                                
                                 <li>
                                     <dl>
                                         <dt><a href=""><img src="<?php echo base_url('themes/default') . '/images';?>/365_7d5e08127b8d6799209674ecffbfc624.jpg_small.jpg" /></a></dt>

@@ -21,15 +21,40 @@ class Goods_model extends CI_Model{
     	
     }
 
+    //获得最好（推荐）商品
+    public function best_goods(){
+    	
+        $condition['is_best'] = 1;
+        $query = $this->db->where($condition)->get(self::TBL);
+        return $query->result_array();
+    }
 
-
-
-
-
-
+    //获得指定的商品信息
+    public function find_goods($goods_id){
+        
+        $condition['goods_id'] = $goods_id;
+        $query = $this->db->where($condition)->get(self::TBL);
+        return $query->row_array();
+    }
 
 
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
 }

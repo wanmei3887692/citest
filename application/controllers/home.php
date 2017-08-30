@@ -13,8 +13,9 @@ class Home extends Home_Controller{
     public function index(){
         
         $data['cates'] = $this->category_model->front_cate();
-        // var_dump($cates);die;
-    	
+        
+        $data['best_goods'] = $this->goods_model->best_goods();
+        
         $this->load->view('index.html', $data);
     }
     
