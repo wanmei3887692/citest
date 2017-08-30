@@ -55,11 +55,7 @@ class Brand extends CI_Controller{
         else{
             //验证成功，收集数据
             //上传logo文件
-            
-
-            
-            
-            
+           
             if($this->upload->do_upload('logo')){
             	//上传成功
                 $fileinfo = $this->upload->data();
