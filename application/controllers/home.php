@@ -18,6 +18,8 @@ class Home extends Home_Controller{
         
         $data['best_goods'] = $this->goods_model->best_goods();
         
+        $data['cart'] = $this->cart->contents();
+        
         $this->load->view('header.html', $data);
         $this->load->view('menu1.html');
         $this->load->view('index.html');

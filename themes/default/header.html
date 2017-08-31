@@ -61,7 +61,9 @@
 
 						<li>
 							<div class="topNav_menu">
-								<a href="#" class="topNavHover">购物车<b>0</b>种商品<i></i></a>
+								<a href="<?php echo site_url('cart/show');?>" class="topNavHover">购物车<b>
+                                <?php echo $this->cart->total_items();?>
+                                </b>种商品<i></i></a>
 								<div class="topNav_menu_bd" style="display:none;">
 									<!--
 						            <ul>
